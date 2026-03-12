@@ -1,4 +1,4 @@
-import { CHORD_NOTES } from '../data/chords.js';
+import { CHORD_NOTES, CHORD_FIXED_VOICINGS } from '../data/chords.js';
 
 const NOTE_TO_MIDI_MAP = {
   'C': 0, 'C#': 1, 'Db': 1, 'D': 2, 'D#': 3, 'Eb': 3,
@@ -18,6 +18,23 @@ const MAX_MIDI = 72; // C5
  * @returns {number[]} Optimized voicing as sorted MIDI numbers
  */
 export function optimizeVoiceLeading(currentVoicing, targetChordName) {
+  // Voicing fisso per accordi alt e sus
+  const isAlt = targetChordName.endsWith('alt');
+  const isSus = targetChordName.endsWith('sus4');
+  if (isAlt || isSus) {
+    const pattern = isAlt
+      ? CHORD_FIXED_VOICINGS.pattern_alt
+      : CHORD_FIXED_VOICINGS.pattern_sus;
+    const rootNote = CHORD_NOTES[targetChordName]?.[0];
+    if (rootNote !== undefined) {
+      const rootPc = NOTE_TO_MIDI_MAP[rootNote];
+      if (rootPc !== undefined) {
+        const rootMidi = rootPc + 36;
+        return pattern.map(interval => rootMidi + interval);
+      }
+    }
+  }
+
   const notes = CHORD_NOTES[targetChordName];
   if (!notes) return currentVoicing;
 

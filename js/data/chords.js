@@ -70,6 +70,14 @@ export const JAZZ_PROGRESSION_MAP = {
     parallel: ['Cm7b5', 'Bbm7b5']
   },
 
+  Gmaj7: {
+    low:      ['Cmaj7', 'Am7'],
+    mid:      ['Am7', 'Bm7b5', 'Em7'],
+    high:     ['Bbmaj7', 'Ebmaj7', 'Abmaj7'],
+    cycle:    ['Cmaj7', 'Fmaj7'],
+    parallel: ['Gbmaj7', 'Abmaj7']
+  },
+
   // ── LOGICA PARALLELA & TADD DAMERON (bII, bIII, bVI, bVII) ──
 
   Bbmaj7: {
@@ -160,6 +168,92 @@ export const JAZZ_PROGRESSION_MAP = {
     high: ['E7', 'Db7', 'D7alt'],
     cycle: ['Cm7', 'Cmaj7', 'E7'],
     parallel: ['Cdim7', 'Bbdim7']
+  },
+
+  // ── DOMINANTI SECONDARI — Area C Maggiore ──
+
+  D7: {
+    low:      ['Gmaj7', 'Db7'],
+    mid:      ['Am7', 'Em7', 'Cmaj7'],
+    high:     ['Ab7', 'Ebmaj7', 'Bbmaj7'],
+    cycle:    ['Gmaj7', 'Cmaj7'],
+    parallel: ['Db7', 'Eb7']
+  },
+
+  E7: {
+    low:      ['Am7', 'Eb7'],
+    mid:      ['Am7', 'Dm7', 'Cmaj7'],
+    high:     ['Bb7', 'Ebmaj7', 'Abmaj7'],
+    cycle:    ['Am7', 'Dm7'],
+    parallel: ['Eb7', 'F7']
+  },
+
+  A7: {
+    low:      ['Dm7', 'Ab7'],
+    mid:      ['Dm7', 'G7', 'Cmaj7'],
+    high:     ['Eb7', 'Abmaj7', 'Dbmaj7'],
+    cycle:    ['Dm7', 'G7'],
+    parallel: ['Ab7', 'Bb7']
+  },
+
+  B7: {
+    low:      ['Em7', 'Bb7'],
+    mid:      ['Em7', 'Am7', 'Cmaj7'],
+    high:     ['F7', 'Bbmaj7', 'Ebmaj7'],
+    cycle:    ['Em7', 'Am7'],
+    parallel: ['Bb7', 'C7']
+  },
+
+  // ── DOMINANTI SECONDARI — Area C Minore / F ──
+
+  F7: {
+    low:      ['Bbmaj7', 'E7'],
+    mid:      ['Bbmaj7', 'Ebmaj7', 'Cm7'],
+    high:     ['B7', 'Abmaj7', 'Dbmaj7'],
+    cycle:    ['Bbmaj7', 'Ebmaj7'],
+    parallel: ['Gb7', 'E7']
+  },
+
+  C7: {
+    low:      ['Fmaj7', 'B7'],
+    mid:      ['Fmaj7', 'Fm7', 'Bbmaj7'],
+    high:     ['Gb7', 'Dbmaj7', 'Abmaj7'],
+    cycle:    ['Fmaj7', 'Bbmaj7'],
+    parallel: ['Db7', 'B7']
+  },
+
+  // ── DOMINANTI SECONDARI — Area Modale / Flat Keys ──
+
+  Ab7: {
+    low:      ['Dbmaj7', 'G7'],
+    mid:      ['Dbmaj7', 'Abmaj7', 'Ebmaj7'],
+    high:     ['D7', 'Em7', 'Am7'],
+    cycle:    ['Dbmaj7', 'Gbmaj7'],
+    parallel: ['A7', 'Bb7']
+  },
+
+  Db7: {
+    low:      ['Gbmaj7', 'Cmaj7'],
+    mid:      ['Cm7', 'Abmaj7', 'Fm7'],
+    high:     ['G7', 'G7alt', 'Ebmaj7'],
+    cycle:    ['Gbmaj7', 'Cbmaj7'],
+    parallel: ['C7', 'D7']
+  },
+
+  Eb7: {
+    low:      ['Abmaj7', 'D7'],
+    mid:      ['Abmaj7', 'Dbmaj7', 'Cm7'],
+    high:     ['A7', 'Emaj7#5', 'Bbmaj7'],
+    cycle:    ['Abmaj7', 'Dbmaj7'],
+    parallel: ['E7', 'D7']
+  },
+
+  Gb7: {
+    low:      ['Cbmaj7', 'Fmaj7'],
+    mid:      ['Fmaj7', 'Bbmaj7', 'Ebmaj7'],
+    high:     ['C7', 'G7', 'Abmaj7'],
+    cycle:    ['Cbmaj7', 'Gbmaj7'],
+    parallel: ['G7', 'F7']
   }
 };
 
@@ -167,37 +261,23 @@ export const JAZZ_PROGRESSION_MAP = {
 // Appaiono nelle categorie ma NON sono chiavi in JAZZ_PROGRESSION_MAP.
 // Ognuno fallback ai successori del suo accordo parent.
 export const SUCCESSOR_FALLBACKS = {
-  // Varianti di G7
+  // Varianti di G7 (stessa funzione, stessa risoluzione)
   'G7sus4':  'G7',
   'G7alt':   'G7',
   'G7b9':    'G7',
-  // Varianti di D7
-  'D7':      'Dm7',   // non è chiave, fallback al ii
-  'D7alt':   'Dm7',
-  // Varianti di E7
-  'E7':      'Em7',
-  'E7alt':   'Em7',
-  // Varianti di A7
-  'A7':      'Am7',
-  'A7alt':   'Am7',
-  // Dominanti secondarie
-  'F7':      'Fm7',
-  'Ab7':     'Abmaj7',
-  'Db7':     'Dbmaj7',
-  'Eb7':     'Ebmaj7',
-  'Gb7':     'Gbmaj7',  // → fallback a Dbmaj7 (Gbmaj7 non è chiave)
-  'C7':      'Cm7',
-  'B7':      'Bdim7',
+  // Varianti di dominanti secondari (ora puntano al dominante corretto)
+  'D7alt':   'D7',
+  'E7alt':   'E7',
+  'A7alt':   'A7',
   // Accordi maggiori non-chiave
   'Gbmaj7':  'Dbmaj7',
   'Cbmaj7':  'Dbmaj7',
   // Accordi minori non-chiave
   'Abm7':    'Abmaj7',
-  'Bbm7':    'Bb7',
-  'Gm7':     'G7',
-  // C#m7 rimosso (duplicato enarmonico di Dbm7)
-  'Ebm7':    'Ebmaj7',
-  'Gbm7':    'Fm7',
+  'Bbm7':    'Ebmaj7',  // ii di Ab → area Eb/Ab
+  'Gm7':     'Cm7',     // ii di F → area C minore
+  'Ebm7':    'Abmaj7',  // vi di Gb → area Ab
+  'Gbm7':    'Fm7',     // area cromatica remota
   'Dbm7':    'Dbmaj7',
   // Accordi aumentati non-chiave
   'Abmaj7#5': 'Abmaj7',
@@ -271,6 +351,7 @@ export const CHORD_NOTES = {
   'Em7':      ['E', 'G', 'B', 'D'],
   'Fmaj7':    ['F', 'A', 'C', 'E'],
   'G7':       ['G', 'B', 'D', 'F'],
+  'Gmaj7':    ['G', 'B', 'D', 'F#'],
   'Am7':      ['A', 'C', 'E', 'G'],
   'Bm7b5':    ['B', 'D', 'F', 'A'],
 
@@ -337,6 +418,15 @@ export const CHORD_NOTES = {
   'Bbdim7':   ['Bb', 'Db', 'E', 'G']
 };
 
+// ── CHORD_FIXED_VOICINGS ──────────────────────────────────
+// Intervalli in semitoni dal root per accordi con voicing idiomatico fisso.
+// alt: R, b7, b9, 3(10th), b13  →  [0, 10, 13, 16, 20]
+// sus: R, b7, 9, 11              →  [0, 10, 14, 17]  (triade magg. sul b7)
+export const CHORD_FIXED_VOICINGS = {
+  pattern_alt: [0, 10, 13, 16, 20],
+  pattern_sus: [0, 10, 14, 17]
+};
+
 // ── CHORD_TYPE ────────────────────────────────────────────
 // Classificazione per colori e visualizzazione
 
@@ -371,9 +461,9 @@ for (const chord of Object.keys(CHORD_NOTES)) {
 // Cluster per layout 3D
 
 export const CHORD_FAMILIES = {
-  'Do Maggiore': ['Cmaj7', 'Dm7', 'Em7', 'Fmaj7', 'G7', 'Am7', 'Bm7b5'],
-  'Do Minore':   ['Cm7', 'Dm7b5', 'Ebaugmaj7', 'Fm7', 'Am7b5', 'Bb7', 'Bdim7'],
-  'Modale':      ['Bbmaj7', 'Ebmaj7', 'Abmaj7', 'Dbmaj7']
+  'Do Maggiore': ['Cmaj7', 'Gmaj7', 'Dm7', 'Em7', 'Fmaj7', 'G7', 'Am7', 'Bm7b5', 'D7', 'E7', 'A7', 'B7'],
+  'Do Minore':   ['Cm7', 'Dm7b5', 'Ebaugmaj7', 'Fm7', 'Am7b5', 'Bb7', 'Bdim7', 'F7', 'C7'],
+  'Modale':      ['Bbmaj7', 'Ebmaj7', 'Abmaj7', 'Dbmaj7', 'Ab7', 'Db7', 'Eb7', 'Gb7']
 };
 
 // ── Utility functions ─────────────────────────────────────

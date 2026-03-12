@@ -67,8 +67,9 @@ export function playChordSound(chordName, durationSec = null) {
   silenceAll();
 
   let voicing;
-  if (currentVoicing) {
-    voicing = optimizeVoiceLeading(currentVoicing, chordName);
+  const isFixedVoicing = chordName.endsWith('alt') || chordName.endsWith('sus4');
+  if (currentVoicing || isFixedVoicing) {
+    voicing = optimizeVoiceLeading(currentVoicing || [], chordName);
   } else {
     voicing = notes.map((note, i) => {
       const octave = notes.length > 3 ? 3 : (i < 2 ? 3 : 4);
@@ -105,10 +106,16 @@ export function playChordPreview(chordName) {
 
   silenceAll();
 
-  const voicing = notes.map((note, i) => {
-    const octave = notes.length > 3 ? 3 : (i < 2 ? 3 : 4);
-    return noteToMidi(note, octave);
-  }).sort((a, b) => a - b);
+  const isFixedVoicing = chordName.endsWith('alt') || chordName.endsWith('sus4');
+  let voicing;
+  if (isFixedVoicing) {
+    voicing = optimizeVoiceLeading([], chordName);
+  } else {
+    voicing = notes.map((note, i) => {
+      const octave = notes.length > 3 ? 3 : (i < 2 ? 3 : 4);
+      return noteToMidi(note, octave);
+    }).sort((a, b) => a - b);
+  }
 
   const validVoicing = voicing.filter(midi => Number.isFinite(midi));
   if (validVoicing.length === 0) return;

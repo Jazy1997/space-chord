@@ -1,4 +1,4 @@
-import { CHORD_GRAPH, CHORD_TYPE, CHORD_NOTES, JAZZ_PROGRESSION_MAP } from '../data/chords.js';
+import { CHORD_GRAPH, CHORD_TYPE, CHORD_NOTES, JAZZ_PROGRESSION_MAP, SUCCESSOR_FALLBACKS } from '../data/chords.js';
 import { midiToNoteName } from '../audio/voiceleading.js';
 
 const TYPE_LABELS = {
@@ -70,7 +70,9 @@ export function updateInfoPanel(chordName, voicing = null) {
   const type = CHORD_TYPE[chordName] || 'major7';
   const notes = CHORD_NOTES[chordName] || [];
   const typeLabel = TYPE_LABELS[type] || type;
-  const map = JAZZ_PROGRESSION_MAP[chordName];
+  const parent = SUCCESSOR_FALLBACKS[chordName];
+  const map = JAZZ_PROGRESSION_MAP[chordName]
+           || (parent && JAZZ_PROGRESSION_MAP[parent]);
 
   let successorsHtml = '';
 
